@@ -1,38 +1,16 @@
 <template>
-  <div id="app">
-      <div>
-        <h3>Hello world</h3>
-        <input
-          type="number"
-          v-model="donationAmount"
-        >
-        <p>{{ exchangedAmount }}</p>
-        <button v-on:click="fetchExchange">Calculate</button>
-      </div>
+  <div id="app" class="flex justify-center items-center h-screen">
+    <DonationConverter />
+    <AboutCard />
   </div>
 </template>
 
 <script>
+import DonationConverter from './components/DonationConverter.vue'
+import AboutCard from './components/AboutCard.vue'
+
 export default {
-  name: 'App',
-  data() {
-    return {
-      donationAmount: "",
-      exchangedAmount: "",
-    }
-  },
-  methods: {
-    async fetchExchange () {
-      const response = await fetch('https://founderspledge.github.io/fp-interview-exercise-api/currency.json')
-      const { quotes } = await response.json()
-      // TODO Contingency in case quotes.USDGBP is not available
-      this.exchangedAmount = (this.donationAmount * quotes.USDGBP).toFixed(2)
-      console.log(quotes)
-    }
-  }
+    name: 'App',
+    components: { DonationConverter, AboutCard }
 }
 </script>
-
-<style>
-
-</style>
