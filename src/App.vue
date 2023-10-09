@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="flex justify-center items-center h-screen">
+  <div id="app" class="flex gap-12 justify-center items-center h-screen">
     <DonationConverter />
     <AboutCard />
   </div>
