@@ -83,15 +83,18 @@ export default {
 
       // Fetch exchange rates with correct loading state
       this.loadingExchange = true;
-      const response = await fetch(
-        "https://founderspledge.github.io/fp-interview-exercise-api/currency.json",
-        { signal }
-      );
-      // TODO Contingency in case quotes.USDGBP is not available
-      const { quotes } = await response.json();
-      this.exchangedAmount = (this.donationAmount * quotes.USDGBP).toFixed(2);
+      try {
+        const response = await fetch(
+          "https://founderspledge.github.io/fp-interview-exercise-api/currency.json",
+          { signal }
+        );
+        const { quotes } = await response.json();
+        this.exchangedAmount = (this.donationAmount * quotes.USDGBP).toFixed(2);
+        this.$emit('notify', 'success', 'Successfully exchanged donation')
+      } catch {
+        this.$emit('notify', 'error', 'There was a problem exchanging the amount')
+      }
 
-      this.$emit('notify', 'success', 'Successfully exchanged donation')
 
       // Clean up fetchConroller and loading state
       this.fetchController = null;
